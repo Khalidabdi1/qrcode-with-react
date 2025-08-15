@@ -2,8 +2,7 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon ,QrCode} from "lucide-react"
 import { Terminal } from "lucide-react";
-import { useEffect,useRef } from "react";
-import QRCodeStyling from "qr-code-styling";
+
 
 
 import { Button } from "@/components/ui/button"
@@ -31,7 +30,7 @@ import { useState } from "react"
 
   let holder ;
   let laba ;
-export default function MakeQr(){
+export default function MakeQr({data}){
 
   let [selectInput,setSelectValue]=useState({
      type:"Email",
@@ -41,6 +40,7 @@ export default function MakeQr(){
     protocals:"",
     showAlert:false,
   })
+
   
 
 
@@ -72,6 +72,10 @@ export default function MakeQr(){
     setSelectValue({...selectInput,showAlert:false})
 
     },2000)
+  }
+
+  function handleClick(){
+    data(selectInput)
   }
     return(
       
@@ -227,6 +231,7 @@ export default function MakeQr(){
         <Button type="submit" className="w-full" onClick={()=>{
           console.log("is click")
           handleAlert()
+          handleClick()
         }}>
          Create a qrcode
         </Button>
