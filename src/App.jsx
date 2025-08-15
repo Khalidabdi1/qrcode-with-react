@@ -2,11 +2,12 @@
 import './App.css'
 import MakeQr from './com/MakeQr'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react"
+import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon ,ScanLine} from "lucide-react"
 import { Terminal } from "lucide-react";
 import { useState } from 'react';
 import { useEffect,useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
+
 import {
   Card,
   CardAction,
@@ -77,9 +78,9 @@ setResivieData(fromChild)
     
       <Card className="w-full max-w-sm  rounded-xl border border-border bg-card text-card-foreground shadow-sm  ml-5 h-90 ">
               <CardHeader>
-                <CardTitle>Qrcode</CardTitle>
-                {/* <CardDescription>Card Description</CardDescription>
-                <CardAction>Card Action</CardAction> */}
+                <CardTitle>QRcode</CardTitle>
+                <CardDescription>Scan qr</CardDescription>
+                <CardAction><ScanLine /></CardAction>
               </CardHeader>
 
               <CardContent ref={ref} className="w-full  flex items-center justify-center">
