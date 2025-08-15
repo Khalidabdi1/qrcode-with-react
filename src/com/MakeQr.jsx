@@ -2,6 +2,8 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon ,QrCode} from "lucide-react"
 import { Terminal } from "lucide-react";
+import { useEffect,useRef } from "react";
+import QRCodeStyling from "qr-code-styling";
 
 
 import { Button } from "@/components/ui/button"
@@ -69,7 +71,7 @@ export default function MakeQr(){
     setTimeout(()=>{
     setSelectValue({...selectInput,showAlert:false})
 
-    },3000)
+    },2000)
   }
     return(
       
@@ -238,12 +240,12 @@ export default function MakeQr(){
 {/** start of alert  */}
 {selectInput.showAlert===true &&
 
-  <Alert className="w-full max-w-sm rounded-xl border border-border bg-card text-card-foreground shadow-sm absolute left-0 bottom-0 m-5">
-        <QrCode className="h-4 w-4 mr-2" />
-        <AlertTitle>qrcode made !</AlertTitle>
-        <AlertDescription>
-      You can download the qrcode now
-        </AlertDescription>
+       <Alert className="w-full max-w-sm rounded-xl border border-border bg-card text-card-foreground shadow-sm absolute left-0 bottom-0 m-5">
+                <QrCode className="h-4 w-4 mr-2" />
+                <AlertTitle>qrcode made !</AlertTitle>
+                <AlertDescription>
+              You can download the qrcode now
+                </AlertDescription>
       </Alert>
 }
     
