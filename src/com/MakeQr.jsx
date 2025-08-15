@@ -1,7 +1,8 @@
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react"
+import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon ,QrCode} from "lucide-react"
 import { Terminal } from "lucide-react";
+
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,30 +32,32 @@ import { useState } from "react"
 export default function MakeQr(){
 
   let [selectInput,setSelectValue]=useState({
-    name:"Email",
-    password:0,
+     type:"Email",
+     text:"",
+
+    password:"",
     protocals:"",
     showAlert:false,
   })
   
 
 
-  if(selectInput.name ==="Email"){
+  if(selectInput.type ==="Email"){
     laba="Email";
     holder="m@example.com";
-  }else if(selectInput.name ==="Url"){
+  }else if(selectInput.type ==="Url"){
         laba="Url";
     holder="https://example.com";
-  }else if(selectInput.name==="Phone number"){
+  }else if(selectInput.type==="Phone number"){
        laba="Phone number";
     holder="example : +201234567890";
-  }else if(selectInput.name==="SMS"){
+  }else if(selectInput.type==="SMS"){
     laba="SMS";
     holder="example : +201234567890";
-  }else if(selectInput.name==="Wi-Fi"){
+  }else if(selectInput.type==="Wi-Fi"){
     laba="Wi-Fi Name";
     holder="example";
-  }else if(selectInput.name==="Text"){
+  }else if(selectInput.type==="Text"){
     laba="write any Test";
     holder=" hello world";
   }
@@ -88,10 +91,12 @@ export default function MakeQr(){
               <Input
                 id="email"
                 type="email"
-                placeholder={holder}
+                placeholder={selectInput.type==="Wi-Fi" ? "my-wifi":holder}
                 required
                 onChange={(value)=>{
                   console.log(value.target.value)
+                  // selectInput({...})
+                  setSelectValue({...selectInput,text:value.target.value})
                 }}
               />
             </div>
@@ -99,13 +104,36 @@ export default function MakeQr(){
               
 
               {/** if user select wifi */}
-              {selectInput.name==="Wi-Fi"&& <div className="flex items-center">
+                  
+               {selectInput.type==="Wi-Fi"&& <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+              
+              </div> }
+
+
+              {selectInput.type==="Wi-Fi" &&
+                 <Input
+                id="email"
+                type="password"
+                placeholder={holder}
+                required
+                onChange={(value)=>{
+                  console.log(value.target.value)
+                  setSelectValue({...selectInput,password:value.target.value})
+                }}
+              />
+              }
+
+
+
+
+              {selectInput.type==="Wi-Fi"&& <div className="flex items-center">
                 <Label htmlFor="password">Protocals</Label>
                
               </div> }
               
              
-{selectInput.name==="Wi-Fi"&&
+{selectInput.type==="Wi-Fi"&&
 
 <Select onValueChange={(value)=>{
       console.log(value)
@@ -114,7 +142,7 @@ export default function MakeQr(){
            
       }} value={selectInput.protocals} >
           <SelectTrigger className="w-full " >
-            <SelectValue placeholder="Select a fruit" />
+            <SelectValue placeholder="Select a protocals" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -151,9 +179,9 @@ export default function MakeQr(){
 {/** start of select */}
     <Select onValueChange={(value)=>{
       console.log(value)
-      setSelectValue({...selectInput,name:value})
+      setSelectValue({...selectInput,type:value})
            
-      }} value={selectInput.name}>
+      }} value={selectInput.type}>
           <SelectTrigger className="w-full " >
             <SelectValue placeholder="Select a fruit" />
           </SelectTrigger>
@@ -161,7 +189,7 @@ export default function MakeQr(){
             <SelectGroup>
               <SelectLabel>Fruits</SelectLabel>
                {/** mailto:example@email.com */}
-              <SelectItem value="email">email</SelectItem>
+              <SelectItem value="Email">email</SelectItem>
               {/** https://example.com */}
               <SelectItem value="Url">Url</SelectItem>
               {/** tel:+201234567890 */}
@@ -194,7 +222,7 @@ export default function MakeQr(){
       </CardContent>
 
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full" onClick={(e)=>{
+        <Button type="submit" className="w-full" onClick={()=>{
           console.log("is click")
           handleAlert()
         }}>
@@ -211,7 +239,7 @@ export default function MakeQr(){
 {selectInput.showAlert===true &&
 
   <Alert className="w-full max-w-sm rounded-xl border border-border bg-card text-card-foreground shadow-sm absolute left-0 bottom-0 m-5">
-        <AlertCircleIcon className="h-4 w-4 mr-2" />
+        <QrCode className="h-4 w-4 mr-2" />
         <AlertTitle>qrcode made !</AlertTitle>
         <AlertDescription>
       You can download the qrcode now
