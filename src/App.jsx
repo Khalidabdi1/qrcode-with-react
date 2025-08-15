@@ -1,15 +1,17 @@
 
 import './App.css'
-import { Button } from "@/components/ui/button"
+import MakeQr from './com/MakeQr'
 
 function App() {
 
   return (
-    <>
-    <Button>
-      add
-    </Button>
-    </>
+    
+    <div className="bg-background text-foreground min-h-screen flex items-center justify-center" >
+          
+          <MakeQr/>
+          
+    </div>
+    
   )
 }
 
