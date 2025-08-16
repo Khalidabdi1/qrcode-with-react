@@ -2,5 +2,5 @@
 
 
 
-[!firstphoto](https://github.com/Khalidabdi1/qrcode-with-react/blob/main/src/assets/qrcode1.jpeg)
-[!second photo](https://github.com/Khalidabdi1/qrcode-with-react/blob/main/src/assets/qrcode2.jpeg)
+![firstphoto](https://github.com/Khalidabdi1/qrcode-with-react/blob/main/src/assets/qrcode1.jpeg)
+![second photo](https://github.com/Khalidabdi1/qrcode-with-react/blob/main/src/assets/qrcode2.jpeg)
