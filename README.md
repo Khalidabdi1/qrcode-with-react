@@ -2,7 +2,7 @@
 
 
 ## link to visit the website 
-![qrcode website](https://qrcode-with-react.vercel.app/)
+[qrcode website](https://qrcode-with-react.vercel.app/)
 
 ### photo from the project
 ![firstphoto](https://github.com/Khalidabdi1/qrcode-with-react/blob/main/src/assets/qrcode1.jpeg)
