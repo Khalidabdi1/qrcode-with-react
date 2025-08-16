@@ -23,6 +23,7 @@ import {
 function App() {
 const ref=useRef(null)
   let [resvieData,setResivieData]=useState({text:""})
+  // let[down,setDown]=useState(false)
 
   function getData(fromChild){
 console.log(fromChild)
@@ -34,14 +35,18 @@ setResivieData(fromChild)
 
   // }
 
+  // function isDownload(){
+     
+  // }
+
 
   useEffect(()=>{
     if(!resvieData.text) return
        const qrcode= new QRCodeStyling({
-      width:200,
-      height:200,
+      width:250,
+      height:250,
       type:"svg",
-      data:resvieData.text,
+      data:resvieData.format,
       image:"",
       dotsOptions:{
         color:"#EBEBEB",
@@ -62,13 +67,21 @@ setResivieData(fromChild)
       ref.current.innerHTML=""
       qrcode.append(ref.current)
     }
+
+    if(resvieData.downlaod===true){
+      function qrDownload(){
+           qrcode.download({name:"qrcode",extension:"png"})
+      }
+
+      qrDownload()
+    }
   
   },[resvieData])
 
 
   return (
     
-    <div className="bg-background text-foreground min-h-screen flex items-center justify-center" style={{height:"100vh",width:"100vw"}}>
+    <div className="bg-background text-foreground min-h-screen  items-center justify-center flex flex-col lg:flex-row " style={{height:"100vh",width:"100vw"}}>
           
          
       <MakeQr data={getData} />
@@ -76,7 +89,7 @@ setResivieData(fromChild)
     
     {/** show qrcode */}
     
-      <Card className="w-full max-w-sm  rounded-xl border border-border bg-card text-card-foreground shadow-sm  ml-5 h-90 ">
+      <Card className="w-full max-w-sm  rounded-xl border border-border bg-card text-card-foreground shadow-sm  mt-2 ml-5 h-90  ">
               <CardHeader>
                 <CardTitle>QRcode</CardTitle>
                 <CardDescription>Scan qr</CardDescription>

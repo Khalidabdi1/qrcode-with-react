@@ -26,19 +26,25 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
   let holder ;
   let laba ;
 export default function MakeQr({data}){
 
+
+  let[disabledBTN,setdisabledBTN]=useState(false)
+  let[downlaodbtn,setDownload]=useState(true)
+
   let [selectInput,setSelectValue]=useState({
      type:"Email",
      text:"",
+     format:"",
 
     password:"",
     protocals:"",
     showAlert:false,
+    downlaod :false,
   })
 
   
@@ -64,18 +70,100 @@ export default function MakeQr({data}){
     holder=" hello world";
   }
 
+  // button disabled 
+ 
+useEffect(()=>{
+  if(selectInput.type==="Wi-Fi"){
+    if(selectInput.password.trim()===""||selectInput.protocals===""||selectInput.text===""){
+      setdisabledBTN(true)
+    }else{
+      setdisabledBTN(false)
+    }
+  }
+
+  if(selectInput.text===""){
+    setdisabledBTN(true)
+  }else{
+        setdisabledBTN(false)
+
+  }
+},[selectInput.text,selectInput.type,selectInput.protocals,selectInput.password])
+ 
+
+  // chnage text format 
+
+  useEffect(()=>{
+     let formatted = "";
+    if(selectInput.type ==="Email"){
+                   formatted = `mailto:${selectInput.text}`;
+
+                  }else if(selectInput.type ==="Url"){
+                   formatted =   `${selectInput.text}`
+
+                  }else if(selectInput.type ==="Phone number"){
+                   formatted     =`tel:${selectInput.text}`
+
+                  }else if(selectInput.type ==="SMS"){
+            formatted =      `sms:${selectInput.text}`;
+
+                  }else if(selectInput.type ==="Text"){
+            formatted=     `${selectInput.text}`
+
+                  }else if(selectInput.type ==="Wi-Fi"){
+                      {/** t = protocals , s =name of network , p = password*/}
+                          {/** WIFI:T:WPA;S:MyNetwork;P:mypassword;;*/}
+                        
+
+                  formatted=   `WIFI:T:${selectInput.protocals};S:${selectInput.text};P:${selectInput.password};;`
+
+                  }
+
+                  setSelectValue(prev=>({...prev,format:formatted}))
+
+  },[selectInput.password,selectInput.protocals,selectInput.type,selectInput.text])
 
   // create alert
   function handleAlert(){
-    setSelectValue({...selectInput,showAlert:true})
+    setSelectValue(prev=>({...prev,showAlert:true}))
     setTimeout(()=>{
-    setSelectValue({...selectInput,showAlert:false})
+    setSelectValue(prev=>({...prev,showAlert:false}))
 
     },2000)
   }
 
+
+    //handle download 
+
+  function handleDownload(){
+      //  setSelectValue(prev=>({...prev,downlaod:true}))
+
+    let currentdata={...selectInput,downlaod:true}
+    
+    data(currentdata)
+
+  
+setDownload(true)
+  }
+
+
+  //onclikc  create qr button 
   function handleClick(){
-    data(selectInput)
+  
+    setDownload(false)
+
+///maybe edit this 
+        setSelectValue(prev=>({...prev,downlaod:false}))
+ 
+      // setSelectValue(prev=>({...prev}))
+
+    let currentdata={...selectInput}
+    
+    data(currentdata)
+
+ 
+
+    // setSelectValue(prev=>({...prev,text:"",password:"",protocals:""}))
+    
   }
     return(
       
@@ -102,8 +190,18 @@ export default function MakeQr({data}){
                 onChange={(value)=>{
                   console.log(value.target.value)
                   // selectInput({...})
-                  setSelectValue({...selectInput,text:value.target.value})
+                  // setSelectValue({...selectInput,text:value.target.value})
+
+                                    setSelectValue(prev=>({...prev,text:value.target.value}))
+
+                  
+                  //check to put the right text format 
+
+                  
+
+
                 }}
+                value={selectInput.text}
               />
             </div>
             <div className="grid gap-2">
@@ -125,7 +223,7 @@ export default function MakeQr({data}){
                 required
                 onChange={(value)=>{
                   console.log(value.target.value)
-                  setSelectValue({...selectInput,password:value.target.value})
+                  setSelectValue(prev=>({...prev,password:value.target.value}))
                 }}
               />
               }
@@ -144,7 +242,7 @@ export default function MakeQr({data}){
 <Select onValueChange={(value)=>{
       console.log(value)
       // setSelectValue({...selectInput,protocals:value})
-           setSelectValue({...selectInput,protocals:value})
+           setSelectValue(prev=>({...prev,protocals:value}))
            
       }} value={selectInput.protocals} >
           <SelectTrigger className="w-full " >
@@ -185,7 +283,7 @@ export default function MakeQr({data}){
 {/** start of select */}
     <Select onValueChange={(value)=>{
       console.log(value)
-      setSelectValue({...selectInput,type:value})
+      setSelectValue(prev=>({...prev,type:value}))
            
       }} value={selectInput.type}>
           <SelectTrigger className="w-full " >
@@ -232,10 +330,13 @@ export default function MakeQr({data}){
           console.log("is click")
           handleAlert()
           handleClick()
-        }}>
+        }} disabled={disabledBTN}>
          Create a qrcode
         </Button>
-        <Button variant="destructive" className="w-full">
+        <Button variant="destructive" className="w-full" disabled={downlaodbtn} onClick={()=>{
+          handleDownload()
+          
+        }}>
          Download QR Code
         </Button>
       </CardFooter>
