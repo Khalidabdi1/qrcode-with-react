@@ -7,6 +7,8 @@ import { Terminal } from "lucide-react";
 import { useState } from 'react';
 import { useEffect,useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
+import { Analytics } from '@vercel/analytics/react';
+
 
 import {
   Card,
@@ -82,7 +84,7 @@ setResivieData(fromChild)
   return (
     
     <div className="bg-background text-foreground min-h-screen  items-center justify-center flex flex-col lg:flex-row " style={{height:"100vh",width:"100vw"}}>
-          
+          <Analytics/>
          
       <MakeQr data={getData} />
       
