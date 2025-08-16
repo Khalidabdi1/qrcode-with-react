@@ -2,5 +2,5 @@
 
 
 
-[!firstphoto](./assets/qrcode1.jpeg)
-[!second photo](./assets/qrcode2.jpeg)
+[!firstphoto](./src/assets/qrcode1.jpeg)
+[!second photo](./src/assets/qrcode2.jpeg)
